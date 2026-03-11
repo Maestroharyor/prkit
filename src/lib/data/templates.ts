@@ -403,5 +403,75 @@ Link: {{LINK}}`
 
 Refs: {{TICKET_ID}}
 Link: {{LINK}}`
+	},
+	{
+		id: 'detailed-feature',
+		name: 'Detailed Feature',
+		builtin: true,
+		content: `## Overview
+
+{{TITLE}}
+
+## Files Modified
+
+-
+
+## Changes Made
+
+-
+
+## How to Test
+
+1.
+
+## No Regression
+
+- [ ] Existing functionality unaffected
+- [ ] Related features still work as expected
+
+Refs: {{TICKET_ID}}
+Link: {{LINK}}
+
+## Screenshots`
+	},
+	{
+		id: 'team-mr',
+		name: 'Team MR',
+		builtin: true,
+		content: `### Description
+{{TITLE}}
+
+### Issue
+- [{{TICKET_ID}}]({{LINK}})
+
+### Related MRs
+- [Backend]()
+- [Frontend]()
+
+### Tracking Link
+-
+
+### Changes made
+> change 1
+> change 2
+
+### Type of change
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] This change requires a documentation update
+
+### How This Can Be Manually Tested?
+1.
+
+### Checklist
+- [ ] My code conforms with code review checklists
+- [ ] I have linted my code prior to submission
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing tests pass locally with my changes
+
+### Screenshots`
 	}
 ];

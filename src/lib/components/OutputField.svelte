@@ -5,11 +5,13 @@
 	let {
 		label,
 		value = $bindable(),
-		generatedValue
+		generatedValue,
+		multiline = false
 	}: {
 		label: string;
 		value: string;
 		generatedValue: string;
+		multiline?: boolean;
 	} = $props();
 
 	let hasContent = $derived(generatedValue !== '');
@@ -37,22 +39,36 @@
 	</div>
 	{#if hasContent}
 		<div
-			class="flex items-center gap-2 rounded-lg py-2 transition-colors {isOverridden
-				? 'border border-indigo-300 bg-indigo-50/50 dark:border-indigo-500/30 dark:bg-indigo-500/5'
-				: ''}"
+			class="flex {multiline
+				? 'items-start'
+				: 'items-center'} gap-2 rounded-lg border px-3 py-2 transition-colors focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500
+			{isOverridden
+				? 'border-indigo-300 bg-indigo-50/50 dark:border-indigo-500/30 dark:bg-indigo-500/5'
+				: 'border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800/50'}"
 		>
-			<input
-				type="text"
-				bind:value
-				class="w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm text-zinc-800 placeholder-zinc-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800/50 dark:text-zinc-200 dark:placeholder-zinc-500"
-				aria-label={label}
-			/>
+			{#if multiline}
+				<textarea
+					bind:value
+					rows={2}
+					class="min-w-0 flex-1 resize-none border-0 bg-transparent text-sm text-zinc-800 outline-none focus:border-0 focus:ring-0 focus:outline-none dark:text-zinc-200"
+					aria-label={label}
+				></textarea>
+			{:else}
+				<input
+					type="text"
+					bind:value
+					class="min-w-0 flex-1 border-0 bg-transparent text-sm text-zinc-800 outline-none focus:ring-0 focus:outline-none dark:text-zinc-200"
+					aria-label={label}
+				/>
+			{/if}
 			{#if value}
 				<CopyButton text={value} />
 			{/if}
 		</div>
 	{:else}
-		<div class="rounded-lg px-3 py-2 text-sm text-zinc-400 dark:text-zinc-500">
+		<div
+			class="rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm text-zinc-400 dark:border-zinc-700 dark:bg-zinc-800/50 dark:text-zinc-500"
+		>
 			Waiting for input...
 		</div>
 	{/if}

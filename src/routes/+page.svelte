@@ -24,7 +24,7 @@
 	import AddCustomTypeModal from '$lib/components/AddCustomTypeModal.svelte';
 	import KeyboardShortcutsModal from '$lib/components/KeyboardShortcutsModal.svelte';
 	import HistoryPanel from '$lib/components/HistoryPanel.svelte';
-	import { RotateCcw, FileInput, FileOutput, Check, Clock } from 'lucide-svelte';
+	import { FileInput, FileOutput, Check, Clock } from 'lucide-svelte';
 	import type { HistoryEntry } from '$lib/types';
 
 	let parsedIssue = $derived(parseTicket(appState.issueText));
@@ -119,12 +119,6 @@
 			}
 		}
 	});
-
-	let commitOverridden = $derived(commitValue !== generatedCommit && generatedCommit !== '');
-
-	function resetCommit() {
-		commitValue = generatedCommit;
-	}
 
 	function handleDescriptionChange(newVal: string) {
 		displayDescription = newVal;
@@ -368,39 +362,12 @@
 								bind:value={titleValue}
 								generatedValue={generatedTitle}
 							/>
-							<div class="space-y-1">
-								<div class="flex items-center justify-between">
-									<span class="text-sm font-medium text-zinc-600 dark:text-zinc-400"
-										>Commit message</span
-									>
-									{#if commitOverridden}
-										<button
-											type="button"
-											onclick={resetCommit}
-											class="flex items-center gap-1 text-xs text-indigo-500 transition-colors hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300"
-											title="Reset to generated value"
-										>
-											<RotateCcw class="size-3" />
-											Reset
-										</button>
-									{/if}
-								</div>
-								<div
-									class="flex items-start gap-2 rounded-lg py-2 transition-colors {commitOverridden
-										? 'border border-indigo-300 bg-indigo-50/50 dark:border-indigo-500/30 dark:bg-indigo-500/5'
-										: ''}"
-								>
-									<textarea
-										bind:value={commitValue}
-										rows={2}
-										class="w-full resize-none rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm text-zinc-800 placeholder-zinc-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800/50 dark:text-zinc-200 dark:placeholder-zinc-500"
-										aria-label="Commit message"
-									></textarea>
-									{#if commitValue}
-										<CopyButton text={commitValue} />
-									{/if}
-								</div>
-							</div>
+							<OutputField
+								label="Commit message"
+								bind:value={commitValue}
+								generatedValue={generatedCommit}
+								multiline
+							/>
 						</div>
 					{:else}
 						<div class="flex flex-col items-center justify-center py-12 text-center">
